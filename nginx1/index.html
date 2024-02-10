@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>My List</title>
+  </head>
+  <body>
+    <p>Making Fetch Happen</p>
+    <button onclick="makeRequest()">Make Request</button>
+
+    <p id="result"></p>
+
+    <script>
+      function makeRequest() {
+        fetch("http://192.168.8.131:8000")
+        .then((response) => response.json())
+          .then((data) => {
+            const listElement = document.getElementById("result");
+            while (listElement.firstChild) {
+              listElement.removeChild(listElement.firstChild);
+            }
+            data.forEach(item => {
+              const listItem = document.createElement('li');
+              listItem.textContent = item.trim();
+              listElement.appendChild(listItem);
+            });
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+    </script>
+  </body>
+</html>
